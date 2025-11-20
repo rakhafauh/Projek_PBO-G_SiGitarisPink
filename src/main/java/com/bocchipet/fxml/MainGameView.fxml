@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootPane" prefHeight="700.0" prefWidth="400.0" styleClass="root" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bocchipet.controllers.MainGameController">
+  <stylesheets>
+    <URL value="@../css/style.css" />
+  </stylesheets>
+  <children>
+    <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="14.0" spacing="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="10.0">
+      <children>
+        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@../../images/ui/icon_money.png" />
+          </image>
+        </ImageView>
+        <Label fx:id="moneyLabel" styleClass="status-label" text="¥ 1,000,000">
+          <font>
+            <Font name="System Bold" size="18.0" />
+          </font>
+        </Label>
+        
+        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@../../images/ui/icon_otak.png" />
+          </image>
+        </ImageView>
+        <ProgressBar fx:id="sanityBar" prefWidth="100.0" progress="0.8" styleClass="sanity-bar" />
+        
+        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@../../images/ui/icon_onigiri.png" />
+          </image>
+        </ImageView>
+        <ProgressBar fx:id="foodBar" prefWidth="100.0" progress="0.6" styleClass="food-bar" />
+      </children>
+    </HBox>
+
+    <Button fx:id="settingsButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="350.0" layoutY="10.0" mnemonicParsing="false" onAction="#onSettingsClick" styleClass="icon-button" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+      <graphic>
+        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@../../images/ui/icon_gear.png" />
+          </image>
+        </ImageView>
+      </graphic>
+    </Button>
+
+    <StackPane layoutX="50.0" layoutY="150.0" prefHeight="300.0" prefWidth="300.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="150.0">
+      <children>
+        <ImageView fx:id="guitarOnPlayer" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="bocchiCharacter" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="animationOverlay" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" mouseTransparent="true" />
+      </children>
+    </StackPane>
+
+    <HBox alignment="CENTER" layoutX="14.0" layoutY="580.0" spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+      <children>
+        <Button fx:id="bandButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#onBandClick" styleClass="action-button" text="Band">
+          <graphic>
+            <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+              <image>
+                <Image url="@../../images/ui/icon_band.png" />
+              </image>
+            </ImageView>
+          </graphic>
+        </Button>
+        <Button fx:id="partTimeButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#onPartTimeClick" styleClass="action-button" text="Part-time">
+          <graphic>
+            <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+              <image>
+                <Image url="@../../images/ui/icon_part_time.png" />
+              </image>
+            </ImageView>
+          </graphic>
+        </Button>
+        <Button fx:id="shopButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#onShopClick" styleClass="action-button" text="Shop">
+          <graphic>
+            <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+              <image>
+                <Image url="@../../images/ui/icon_shop.png" />
+              </image>
+            </ImageView>
+          </graphic>
+        </Button>
+      </children>
+    </HBox>
+
+    <VBox fx:id="settingsMenu" alignment="CENTER" layoutY="500.0" prefHeight="200.0" prefWidth="400.0" spacing="20.0" styleClass="settings-menu" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <children>
+        <Label text="Settings" textFill="WHITE">
+          <font>
+            <Font name="System Bold" size="24.0" />
+          </font>
+        </Label>
+        <Button fx:id="saveButton" mnemonicParsing="false" prefWidth="200.0" text="Save Game" />
+        <Button fx:id="loadButton" mnemonicParsing="false" onAction="#onLoadClick" prefWidth="200.0" text="Load Game" />
+      </children>
+      <padding>
+        <Insets bottom="20.0" top="20.0" />
+      </padding>
+    </VBox>
+  </children>
+</AnchorPane>
