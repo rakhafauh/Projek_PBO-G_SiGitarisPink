@@ -1,6 +1,7 @@
 package com.bocchipet;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,9 +15,10 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            URL fxmlUrl = getClass().getResource("/com/bocchipet/fxml/MainGameView.fxml");
+            URL fxmlUrl = getClass().getResource("/fxml/MainGameView.fxml");
+
             if (fxmlUrl == null) {
-                System.err.println("Gak nemu file FXML. Path harus bener.");
+                System.err.println("CRITICAL ERROR: Tidak dapat menemukan file FXML!");
                 setupEmptyStage(primaryStage);
                 return;
             }
@@ -26,6 +28,12 @@ public class MainApp extends Application {
 
             primaryStage.setTitle("Bocchi Pet Game");
             primaryStage.setScene(scene);
+            
+            primaryStage.setOnCloseRequest(e -> {
+                Platform.exit();
+                System.exit(0);
+            });
+            
             primaryStage.show();
 
         } catch (IOException e) {
@@ -33,11 +41,16 @@ public class MainApp extends Application {
         }
     }
 
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+        System.exit(0);
+    }
+
     private void setupEmptyStage(Stage primaryStage) {
         javafx.scene.layout.StackPane root = new javafx.scene.layout.StackPane();
-        root.getChildren().add(new javafx.scene.control.Label("MainGameView.fxml belum dibuat."));
+        root.getChildren().add(new javafx.scene.control.Label("Error Loading FXML"));
         Scene scene = new Scene(root, 600, 400);
-        primaryStage.setTitle("Bocchi Pet Game (Dev Mode)");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

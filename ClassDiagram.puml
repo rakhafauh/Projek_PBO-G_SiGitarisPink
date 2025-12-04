@@ -1,0 +1,148 @@
+@startuml
+
+' --- PENGATURAN TAMPILAN ---
+' Ini agar simbol visibility (+/-) muncul sebagai teks, bukan ikon bulat/kotak
+skinparam classAttributeIconSize 0
+skinparam monochrome true
+skinparam linetype ortho
+
+' --- JUDUL ---
+title Class Diagram - Si Gitaris Pink
+
+' ==========================================
+' 1. MODEL (DATA)
+' ==========================================
+
+class Player {
+    ' Atribut (Visibility Name : Type)
+    - stats : PlayerStats
+    - currentGuitarImage : StringProperty
+    ' Method (Visibility Name(Param) : ReturnType)
+    + Player()
+    + addSanity(amount: int) : void
+    + addFood(amount: int) : void
+    + addMoney(amount: int) : void
+    + getCurrentGuitarImage() : String
+    + setCurrentGuitarImage(path: String) : void
+}
+
+class PlayerStats {
+    - sanity : IntegerProperty
+    - food : IntegerProperty
+    - money : IntegerProperty
+    + PlayerStats(s: int, f: int, m: int)
+    + getSanity() : int
+    + getFood() : int
+    + getMoney() : int
+}
+
+' ==========================================
+' 2. AKTIVITAS (INTERFACE & POLYMORPHISM)
+' ==========================================
+
+' Tipe Class: INTERFACE
+interface IActivity <<Interface>> {
+    + perform(player: Player) : void
+    + getAnimationImageKey() : String
+    + getSoundEffectKey() : String
+}
+
+class PartTimeJob {
+    + perform(player: Player) : void
+    + getButtonLabel() : String
+}
+
+class BandPractice {
+    + perform(player: Player) : void
+    + getButtonLabel() : String
+}
+
+' ==========================================
+' 3. EVENT (ABSTRACT & INHERITANCE)
+' ==========================================
+
+' Tipe Class: ABSTRACT CLASS
+abstract class GameEvent <<Abstract>> {
+    # eventMessage : String
+    + {abstract} trigger(player: Player) : void
+    + getMessage() : String
+}
+
+class SicknessEvent {
+    + SicknessEvent()
+    + trigger(player: Player) : void
+}
+
+' ==========================================
+' 4. SHOP (AGREGASI)
+' ==========================================
+
+class Shop {
+    - availableItems : List<ShopItem>
+    + Shop()
+    + purchaseItem(player: Player, item: ShopItem) : boolean
+    + getAvailableItems() : List<ShopItem>
+}
+
+class ShopItem {
+    - name : String
+    - price : int
+    - foodBonus : int
+    - guitarImageId : String
+    + ShopItem(name: String, price: int, bonus: int, img: String)
+    + getName() : String
+    + getPrice() : int
+}
+
+' ==========================================
+' 5. CONTROLLER & SERVICES
+' ==========================================
+
+class MainGameController {
+    - player : Player
+    - assetManager : AssetManager
+    - saveLoadService : SaveLoadService
+    - uiManager : UIManager
+    + initialize() : void
+    - executeActivity(activity: IActivity) : void
+    - onPartTimeClick() : void
+    - onBandClick() : void
+}
+
+class SaveLoadService {
+    - gson : Gson
+    + saveGame(player: Player, slotName: String) : void
+    + loadGame(slotName: String) : Player
+}
+
+class AssetManager {
+    - images : Map<String, Image>
+    - sounds : Map<String, Media>
+    + loadAssets() : void
+    + getImage(key: String) : Image
+    + getSound(key: String) : Media
+}
+
+' ==========================================
+' 6. HUBUNGAN (ASOSIASI ANTAR CLASS)
+' ==========================================
+
+' Komposisi (Player MEMILIKI PlayerStats secara penuh)
+Player *-- PlayerStats : <<Composes>>
+
+' Realisasi/Implementasi (PartTimeJob ADALAH SEBUAH IActivity)
+IActivity <|.. PartTimeJob : <<Implements>>
+IActivity <|.. BandPractice : <<Implements>>
+
+' Generalisasi/Inheritance (SicknessEvent ADALAH SEBUAH GameEvent)
+GameEvent <|-- SicknessEvent : <<Extends>>
+
+' Agregasi (Shop MEMILIKI DAFTAR ShopItem)
+Shop o-- "0..*" ShopItem : <<Has>>
+
+' Asosiasi (Controller MENGGUNAKAN Service & Player)
+MainGameController --> SaveLoadService : <<Uses>>
+MainGameController --> AssetManager : <<Uses>>
+MainGameController --> Player : <<Manages>>
+
+@enduml

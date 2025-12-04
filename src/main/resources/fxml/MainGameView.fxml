@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="rootPane" prefHeight="700.0" prefWidth="400.0" styleClass="root" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bocchipet.controllers.MainGameController">
+  <stylesheets>
+    <URL value="@../css/style.css" />
+  </stylesheets>
+  <children>
+
+    <VBox alignment="TOP_CENTER" spacing="0.0">
+      <children>
+        
+        <AnchorPane prefHeight="90.0" minHeight="90.0" styleClass="header-section">
+          <children>
+            <HBox alignment="CENTER" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="10.0">
+              <children>
+                
+                <VBox alignment="CENTER" spacing="2.0">
+                   <children>
+                      <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <image><Image url="@../images/ui/icon_money.png" /></image>
+                      </ImageView>
+                      <Label fx:id="moneyLabel" styleClass="money-label" text="9999" />
+                   </children>
+                </VBox>
+
+                <Region HBox.hgrow="ALWAYS" />
+
+                <HBox spacing="10.0" alignment="CENTER">
+                    <StackPane>
+                       <children>
+                          <Rectangle arcHeight="0.0" arcWidth="0.0" height="50.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" styleClass="status-frame" width="50.0" />
+                          <ProgressBar fx:id="sanityBar" prefHeight="46.0" prefWidth="46.0" progress="0.5" styleClass="status-bar-fill" />
+                          <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                             <image><Image url="@../images/ui/icon_otak.png" /></image>
+                          </ImageView>
+                       </children>
+                    </StackPane>
+                    <StackPane>
+                       <children>
+                          <Rectangle arcHeight="0.0" arcWidth="0.0" height="50.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" styleClass="status-frame" width="50.0" />
+                          <ProgressBar fx:id="foodBar" prefHeight="46.0" prefWidth="46.0" progress="0.7" styleClass="status-bar-fill" />
+                          <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                             <image><Image url="@../images/ui/icon_onigiri.png" /></image>
+                          </ImageView>
+                       </children>
+                    </StackPane>
+                </HBox>
+
+                <Region HBox.hgrow="ALWAYS" />
+
+                <Button fx:id="settingsButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#onSettingsClick" styleClass="icon-button">
+                  <graphic>
+                    <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                      <image><Image url="@../images/ui/icon_gear.png" /></image>
+                    </ImageView>
+                  </graphic>
+                </Button>
+
+              </children>
+            </HBox>
+          </children>
+        </AnchorPane>
+
+        <StackPane VBox.vgrow="ALWAYS" style="-fx-background-color: #D6D6D6;">
+          <children>
+            <ImageView fx:id="bocchiCharacter" fitHeight="400.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="animationOverlay" fitHeight="400.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" mouseTransparent="true" />
+          </children>
+        </StackPane>
+
+        <AnchorPane prefHeight="110.0" minHeight="110.0" styleClass="footer-section">
+          <children>
+            <HBox alignment="CENTER" spacing="30.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+              <children>
+                <Button fx:id="bandButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#onBandClick" styleClass="action-button" text="Band">
+                  <graphic>
+                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                      <image><Image url="@../images/ui/icon_band.png" /></image>
+                    </ImageView>
+                  </graphic>
+                </Button>
+                <Button fx:id="partTimeButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#onPartTimeClick" styleClass="action-button" text="Part-Time">
+                  <graphic>
+                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                      <image><Image url="@../images/ui/icon_part_time.png" /></image>
+                    </ImageView>
+                  </graphic>
+                </Button>
+                <Button fx:id="shopButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#onShopClick" styleClass="action-button" text="Shop">
+                  <graphic>
+                    <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                      <image><Image url="@../images/ui/icon_shop.png" /></image>
+                    </ImageView>
+                  </graphic>
+                </Button>
+              </children>
+            </HBox>
+          </children>
+        </AnchorPane>
+
+      </children>
+    </VBox>
+
+    <VBox fx:id="settingsMenu" alignment="CENTER" pickOnBounds="false" spacing="20.0" styleClass="settings-menu" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <children>
+        
+        <VBox alignment="CENTER" spacing="15.0" styleClass="settings-panel" maxWidth="250.0">
+            <children>
+                <Label styleClass="settings-title" text="PAUSE MENU" />
+                
+                <Button fx:id="saveButton" mnemonicParsing="false" prefWidth="200.0" styleClass="menu-button" text="SAVE GAME" />
+                <Button fx:id="loadButton" mnemonicParsing="false" onAction="#onLoadClick" prefWidth="200.0" styleClass="menu-button" text="LOAD GAME" />
+                
+                <Button mnemonicParsing="false" onAction="#onSettingsClick" prefWidth="200.0" styleClass="menu-button" text="RESUME" />
+            </children>
+        </VBox>
+
+      </children>
+      <padding>
+        <Insets bottom="100.0" /> 
+      </padding>
+    </VBox>
+
+    <AnchorPane fx:id="shopMenu" visible="false" style="-fx-background-color: #F8BBD0;">
+       <children>
+          <VBox alignment="CENTER" spacing="10.0" AnchorPane.topAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.bottomAnchor="10.0">
+             <children>
+                <Label text="ITEM SHOP" textFill="#880e4f"><font><Font name="System Bold" size="24.0" /></font></Label>
+                
+                <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+                   <content>
+                      <VBox alignment="CENTER" spacing="15.0">
+                         <padding><Insets top="10.0" bottom="10.0" /></padding>
+                         <children>
+                            <Button mnemonicParsing="false" onAction="#onBuyOnigiri" prefWidth="250.0" styleClass="menu-button" text="Onigiri (¥50) - Food +20" />
+                            <Button mnemonicParsing="false" onAction="#onBuyBento" prefWidth="250.0" styleClass="menu-button" text="Bento (¥150) - Food +50" />
+                            <Button mnemonicParsing="false" onAction="#onBuyPinkGuitar" prefWidth="250.0" styleClass="menu-button" text="Pink Guitar (¥5000)" />
+                            <Button mnemonicParsing="false" onAction="#onBuyYellowGuitar" prefWidth="250.0" styleClass="menu-button" text="Yellow Guitar (¥5000)" />
+                         </children>
+                      </VBox>
+                   </content>
+                </ScrollPane>
+
+                <Button mnemonicParsing="false" onAction="#onShopBackClick" prefWidth="150.0" style="-fx-background-color: #C62828; -fx-text-fill: white; -fx-font-weight: bold;" text="BACK" />
+             </children>
+          </VBox>
+       </children>
+
+       <StackPane.margin>
+          <Insets top="90.0" />
+       </StackPane.margin>
+    </AnchorPane>
+
+  </children>
+</StackPane>
