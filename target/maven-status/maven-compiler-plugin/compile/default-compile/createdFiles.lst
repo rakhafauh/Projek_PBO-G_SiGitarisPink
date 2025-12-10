@@ -1,0 +1,15 @@
+com\bocchipet\MainApp.class
+com\bocchipet\models\activities\IActivity.class
+com\bocchipet\models\shop\Shop.class
+com\bocchipet\models\events\SicknessEvent.class
+com\bocchipet\models\events\GameEvent.class
+com\bocchipet\models\Player.class
+com\bocchipet\models\PlayerStats.class
+com\bocchipet\controllers\MainGameController.class
+com\bocchipet\models\shop\ShopItem.class
+com\bocchipet\services\SaveLoadService.class
+com\bocchipet\controllers\MainGameController$UIManager.class
+com\bocchipet\models\activities\PartTimeJob.class
+com\bocchipet\models\PlayerDataDTO.class
+com\bocchipet\models\activities\BandPractice.class
+com\bocchipet\services\AssetManager.class

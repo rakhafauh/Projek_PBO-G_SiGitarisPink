@@ -17,30 +17,27 @@ import java.nio.file.Paths;
 public class SaveLoadService {
 
     private Gson gson;
-    // Semua file save bakal disimpen di folder "saves" disebelah file .jar nanti
     private final Path SAVE_PATH = Paths.get("saves");
 
     public SaveLoadService() {
-
         this.gson = new GsonBuilder().setPrettyPrinting().create();
-        
-        // Buat cek folder "saves" kalo belum ada
         try {
             if (!Files.exists(SAVE_PATH)) {
                 Files.createDirectories(SAVE_PATH);
                 System.out.println("Folder 'saves' berhasil dibuat.");
             }
         } catch (IOException e) {
-            System.err.println("Gagal buat folder 'saves': " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    public void saveGame(Player player, String slotName) {
+    public void saveGame(Player player, String slotName, String playerName) {
         PlayerDataDTO data = new PlayerDataDTO();
         data.setSanity(player.getSanity());
         data.setFood(player.getFood());
         data.setMoney(player.getMoney());
         data.setCurrentGuitarImage(player.getCurrentGuitarImage());
+        data.setPlayerName(playerName);
 
         Path filePath = SAVE_PATH.resolve(slotName + ".json");
 
@@ -48,7 +45,7 @@ public class SaveLoadService {
             gson.toJson(data, writer);
             System.out.println("Game berhasil disimpan ke: " + filePath);
         } catch (IOException e) {
-            System.err.println("Gagal nyimoen game: " + e.getMessage());
+            System.err.println("Gagal nyimpen game: " + e.getMessage());
         }
     }
 
@@ -57,19 +54,24 @@ public class SaveLoadService {
 
         if (!Files.exists(filePath)) {
             System.err.println("File save gak ditemuin: " + filePath);
-            return new Player();
+            return new Player(); 
         }
 
         try (Reader reader = new FileReader(filePath.toFile())) {
-            // 1. Baca JSON dan konversi ke DTO(Data Transfer Object)
             PlayerDataDTO data = gson.fromJson(reader, PlayerDataDTO.class);
 
-            // 2. Buat Player baru biar ke status dari DTO
             Player loadedPlayer = new Player();
             loadedPlayer.addSanity(data.getSanity() - loadedPlayer.getSanity());
             loadedPlayer.addFood(data.getFood() - loadedPlayer.getFood());
             loadedPlayer.addMoney(data.getMoney() - loadedPlayer.getMoney());
-            loadedPlayer.setCurrentGuitarImage(data.getCurrentGuitarImage());
+            
+            if(data.getCurrentGuitarImage() != null) {
+                loadedPlayer.setCurrentGuitarImage(data.getCurrentGuitarImage());
+            }
+
+            if (data.getPlayerName() != null) {
+                loadedPlayer.setName(data.getPlayerName());
+            }
 
             System.out.println("Game berhasil dimuat dari: " + filePath);
             return loadedPlayer;
@@ -77,6 +79,21 @@ public class SaveLoadService {
         } catch (IOException e) {
             System.err.println("Gagal memuat game: " + e.getMessage());
             return new Player();
+        }
+    }
+
+    public PlayerDataDTO getSlotPreview(String slotName) {
+        Path filePath = SAVE_PATH.resolve(slotName + ".json");
+
+        if (!Files.exists(filePath)) {
+            return null; // Return null biar Controller tahu slot ini "Empty"
+        }
+
+        try (Reader reader = new FileReader(filePath.toFile())) {
+            // Cuman baca data, jangan ubah status game
+            return gson.fromJson(reader, PlayerDataDTO.class);
+        } catch (IOException e) {
+            return null;
         }
     }
 }
