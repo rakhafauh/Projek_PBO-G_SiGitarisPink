@@ -44,7 +44,7 @@
                                     <StackPane>
                                         <children>
                                             <Rectangle arcHeight="0.0" arcWidth="0.0" height="50.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" styleClass="status-frame" width="50.0" />
-                                            <ProgressBar fx:id="sanityBar" prefHeight="46.0" prefWidth="46.0" progress="0.5" styleClass="status-bar-fill" />
+                                            <ProgressBar fx:id="sanityBar" rotate="-90" prefHeight="46.0" prefWidth="46.0" progress="0.5" styleClass="status-bar-fill" />
                                             <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                                                 <image>
                                                     <Image url="@../images/ui/icon_otak.png" />
@@ -55,7 +55,7 @@
                                     <StackPane>
                                         <children>
                                             <Rectangle arcHeight="0.0" arcWidth="0.0" height="50.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" styleClass="status-frame" width="50.0" />
-                                            <ProgressBar fx:id="foodBar" prefHeight="46.0" prefWidth="46.0" progress="0.7" styleClass="status-bar-fill" />
+                                            <ProgressBar fx:id="foodBar" rotate="-90" prefHeight="46.0" prefWidth="46.0" progress="0.7" styleClass="status-bar-fill" />
                                             <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                                                 <image>
                                                     <Image url="@../images/ui/icon_onigiri.png" />
@@ -124,21 +124,18 @@
             </children>
         </VBox>
 
-        <VBox fx:id="settingsMenu" alignment="CENTER" pickOnBounds="false" spacing="20.0" styleClass="settings-menu" maxHeight="200.0" StackPane.alignment="BOTTOM_CENTER">
+        <VBox fx:id="settingsMenu" alignment="CENTER" pickOnBounds="false" spacing="20.0" styleClass="settings-menu" maxHeight="200.0" StackPane.alignment="CENTER">
+    <children>
+        <VBox alignment="CENTER" spacing="15.0" styleClass="settings-panel" maxWidth="250.0">
             <children>
-                <VBox alignment="CENTER" spacing="15.0" styleClass="settings-panel" maxWidth="250.0">
-                    <children>
-                        <Label styleClass="settings-title" text="PAUSE MENU" />
-                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#onSaveMenuClick" prefWidth="200.0" styleClass="menu-button" text="SAVE GAME" />
-                        <Button fx:id="loadButton" mnemonicParsing="false" onAction="#onLoadMenuClick" prefWidth="200.0" styleClass="menu-button" text="LOAD GAME" />
-                        <Button mnemonicParsing="false" onAction="#onSettingsClick" prefWidth="200.0" styleClass="menu-button" text="RESUME" />
-                    </children>
-                </VBox>
+                <Label styleClass="settings-title" text="PAUSE MENU" />
+                <Button fx:id="saveButton" mnemonicParsing="false" onAction="#onSaveMenuClick" prefWidth="200.0" styleClass="menu-button" text="SAVE GAME" />
+                <Button fx:id="loadButton" mnemonicParsing="false" onAction="#onLoadMenuClick" prefWidth="200.0" styleClass="menu-button" text="LOAD GAME" />
+                <Button mnemonicParsing="false" onAction="#onSettingsClick" prefWidth="200.0" styleClass="menu-button" text="RESUME" />
             </children>
-            <padding>
-                <Insets bottom="100.0" />
-            </padding>
         </VBox>
+    </children>
+    </VBox>
 
         <VBox fx:id="slotMenu" alignment="CENTER" visible="false" style="-fx-background-color: rgba(0,0,0,0.5);" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
