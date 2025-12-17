@@ -1,5 +1,8 @@
 package com.bocchipet.controllers;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import com.bocchipet.models.Player;
 import com.bocchipet.models.PlayerDataDTO;
 import com.bocchipet.models.activities.BandPractice;
@@ -29,9 +32,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 public class MainGameController implements Initializable {
 
     @FXML private StackPane rootPane;
@@ -60,17 +60,25 @@ public class MainGameController implements Initializable {
     @FXML private VBox confirmationMenu;
     @FXML private Label confirmationText;
 
-    @FXML private AnchorPane shopMenu; 
+    @FXML private AnchorPane shopMenu;
+    
+    @FXML private ImageView SanityZeroGIF;
+    @FXML private ImageView FoodZeroGIF;
     
     private Shop shop; 
     private Player player;
     private AssetManager assetManager;
     private SaveLoadService saveLoadService;
-    private UIManager uiManager;
+    
+    private InternalUIManager uiManager; 
 
     private MediaPlayer sfxPlayer;
-    private MediaPlayer musicPlayer;
+    private MediaPlayer musicPlayer; 
+    private MediaPlayer guitarLoopMusic; 
     private Timeline characterAnimation;
+    private Timeline SanityZero;
+    private Timeline FoodZero;
+    
 
     private boolean isSettingsOpen = false;
     private boolean isSavingMode = false; 
@@ -85,7 +93,7 @@ public class MainGameController implements Initializable {
         player = new Player();
         shop = new Shop(); 
 
-        uiManager = new UIManager(sanityBar, foodBar, moneyLabel, bocchiCharacter);
+        uiManager = new InternalUIManager(sanityBar, foodBar, moneyLabel, bocchiCharacter); 
         uiManager.bindToPlayer(player);
 
         animationOverlay.setVisible(false);
@@ -96,6 +104,15 @@ public class MainGameController implements Initializable {
         slotMenu.setVisible(false);
         confirmationMenu.setVisible(false);
         inputNameMenu.setVisible(false);
+        SanityZeroGIF.setVisible(false); 
+        FoodZeroGIF.setVisible(false);
+
+        // PERBAIKAN: INISIALISASI MUSIC PLAYER HANYA SEKALI
+        Media guitarLoopMedia = assetManager.getSound("guitarLoopSound");
+        if (guitarLoopMedia != null) {
+            guitarLoopMusic = new MediaPlayer(guitarLoopMedia);
+            guitarLoopMusic.setCycleCount(MediaPlayer.INDEFINITE);
+        }
 
         initializeCharacterAnimation();
         characterAnimation.play();
@@ -245,6 +262,9 @@ public class MainGameController implements Initializable {
     }
 
     private void executeActivity(IActivity activity) {
+        // Cek dulu apakah game sudah berakhir
+        if (player.getSanity() <= 0) return; 
+
         toggleGameControls(true); 
         activity.perform(player);
         Image animationImage = assetManager.getImage(activity.getAnimationImageKey());
@@ -314,32 +334,139 @@ public class MainGameController implements Initializable {
     
     private void initializeCharacterAnimation() {
         characterAnimation = new Timeline(
-            new KeyFrame(Duration.seconds(0), e -> bocchiCharacter.setImage(assetManager.getImage("bocchiIdle1"))),
+            // KeyFrame 0: Idle 1 (Stop Loop Music)
+            new KeyFrame(Duration.seconds(0), e -> {
+                bocchiCharacter.setImage(assetManager.getImage("bocchiIdle1"));
+                if (guitarLoopMusic != null) guitarLoopMusic.stop(); 
+            }),
+            
+            // KeyFrame 2.0: Idle 2
             new KeyFrame(Duration.seconds(2.0), e -> bocchiCharacter.setImage(assetManager.getImage("bocchiIdle2"))),
+            
+            // KeyFrame 2.2: Idle 1
             new KeyFrame(Duration.seconds(2.2), e -> bocchiCharacter.setImage(assetManager.getImage("bocchiIdle1"))),
+            
+            // KeyFrame 5.0: Guitar (Start Loop Music)
             new KeyFrame(Duration.seconds(5), e -> {
                 bocchiCharacter.setImage(assetManager.getImage("bocchiGuitar"));
-                if (musicPlayer != null) musicPlayer.stop();
-                musicPlayer = new MediaPlayer(assetManager.getSound("guitarLoopSound"));
-                musicPlayer.setCycleCount(MediaPlayer.INDEFINITE); 
-                musicPlayer.play();
+                if (guitarLoopMusic != null) guitarLoopMusic.play();
             }),
+            
+            // KeyFrame 10.0: Sleep (Stop Loop Music)
             new KeyFrame(Duration.seconds(10), e -> {
                 bocchiCharacter.setImage(assetManager.getImage("bocchiSleep"));
-                if (musicPlayer != null) musicPlayer.stop();
+                if (guitarLoopMusic != null) guitarLoopMusic.stop();
             }),
             new KeyFrame(Duration.seconds(15)) 
         );
         characterAnimation.setCycleCount(Timeline.INDEFINITE);
     }
+
     
-    private class UIManager {
+    public void triggerSanityZero() {
+        if (SanityZeroGIF != null && SanityZeroGIF.isVisible() == false){
+            
+            System.out.println("DEBUG: Memulai urutan Sanity Zero."); 
+
+            // Logika Penghentian Game
+            toggleGameControls(true);
+            characterAnimation.stop();
+            if (musicPlayer != null) musicPlayer.stop();
+            if (guitarLoopMusic != null) guitarLoopMusic.stop(); 
+
+            SanityZeroGIF.setVisible(true);
+            
+            if (SanityZero == null){
+                initializeSanityZero();
+                System.out.println("DEBUG: Inisialisasi SanityZero Timeline.");
+            }
+            
+            SanityZero.playFromStart(); 
+            System.out.println("DEBUG: Sanity Zero GIF diputar.");
+
+            System.out.println("Bocchi is mentally kejang-kejang (GIF).");
+        } else {
+            System.out.println("DEBUG: Sanity Zero sudah terlihat, tidak dipicu ulang.");
+        }
+    }
+
+    private void initializeSanityZero(){
+        SanityZero = new Timeline(
+            new KeyFrame(Duration.seconds(0), 
+                        e -> SanityZeroGIF.setImage(assetManager.getImage("Stress1"))),
+            
+            new KeyFrame(Duration.seconds(0.5), 
+                        e -> SanityZeroGIF.setImage(assetManager.getImage("Stress2"))),
+            
+            new KeyFrame(Duration.seconds(1.0), 
+                        e -> SanityZeroGIF.setImage(assetManager.getImage("Stress3"))),
+            
+            new KeyFrame(Duration.seconds(3.0))
+        );
+
+        SanityZero.setCycleCount(1);
+        
+        SanityZero.setOnFinished(e -> {
+            SanityZeroGIF.setVisible(false);
+            toggleGameControls(false); 
+            characterAnimation.play();
+        });
+    }
+
+    public void triggerFoodZero() {
+        // Cek hanya jika GIF tidak terlihat
+        if (FoodZeroGIF != null && FoodZeroGIF.isVisible() == false){
+            
+            System.out.println("DEBUG: Memulai urutan Food Zero (Lapar)."); 
+
+            toggleGameControls(true); // Nonaktifkan kontrol game
+            characterAnimation.stop();
+            if (musicPlayer != null) musicPlayer.stop();
+            if (guitarLoopMusic != null) guitarLoopMusic.stop();
+
+            FoodZeroGIF.setVisible(true);
+            
+            if (FoodZero == null){
+                initializeFoodZero();
+                System.out.println("DEBUG: Inisialisasi FoodZero Timeline.");
+            }
+            
+            FoodZero.playFromStart(); 
+            System.out.println("DEBUG: Food Zero GIF diputar.");
+        }
+    }
+
+    private void initializeFoodZero(){
+        FoodZero = new Timeline(
+            new KeyFrame(Duration.seconds(0), 
+                        e -> FoodZeroGIF.setImage(assetManager.getImage("Lapar 1"))),
+            
+            new KeyFrame(Duration.seconds(0.5), 
+                        e -> FoodZeroGIF.setImage(assetManager.getImage("Lapar 2"))),
+            
+            new KeyFrame(Duration.seconds(1.0), 
+                        e -> FoodZeroGIF.setImage(assetManager.getImage("Lapar 3"))),
+            
+            new KeyFrame(Duration.seconds(3.0))
+        );
+
+        FoodZero.setCycleCount(1);
+        
+        FoodZero.setOnFinished(e -> {
+            FoodZeroGIF.setVisible(false);
+            toggleGameControls(false); 
+            characterAnimation.play();
+        });
+    }
+
+    
+    private class InternalUIManager {
         private ProgressBar sanityBar; 
         private ProgressBar foodBar; 
         private Label moneyLabel; 
         private ImageView bocchiCharView;
         
-        public UIManager(ProgressBar s, ProgressBar f, Label m, ImageView b) {
+        public InternalUIManager(ProgressBar s, ProgressBar f, Label m, ImageView b) {
             this.sanityBar = s; 
             this.foodBar = f; 
             this.moneyLabel = m; 
@@ -350,6 +477,21 @@ public class MainGameController implements Initializable {
             sanityBar.progressProperty().bind(playerToBind.sanityProperty().divide(100.0));
             foodBar.progressProperty().bind(playerToBind.foodProperty().divide(100.0));
             moneyLabel.textProperty().bind(playerToBind.moneyProperty().asString("¥ %,d"));
+
+            playerToBind.sanityProperty().addListener((obs, oldValue, newValue) -> {
+                if (newValue.intValue() <= 0 && oldValue.intValue() > 0) { 
+                    System.out.println("DEBUG: Pemicu Listener Sanity Zero Aktif!"); 
+                    MainGameController.this.triggerSanityZero(); 
+                }
+            });
+
+            playerToBind.foodProperty().addListener((obs, oldValue, newValue) -> {
+                if (newValue.intValue() <= 0 && oldValue.intValue() > 0) { 
+                    System.out.println("DEBUG: Pemicu Listener Food Zero Aktif!"); 
+                    MainGameController.this.triggerFoodZero(); 
+                }
+            });
         }
+        
     } 
 }

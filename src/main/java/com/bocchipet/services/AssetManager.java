@@ -1,10 +1,11 @@
 package com.bocchipet.services;
 
-import javafx.scene.image.Image;
-import javafx.scene.media.Media;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
+import javafx.scene.image.Image;
+import javafx.scene.media.Media;
 
 public class AssetManager {
 
@@ -34,6 +35,12 @@ public class AssetManager {
         loadImage("defaultGuitar", "/images/guitars/default_guitar.png");
         loadImage("pinkGuitar", "/images/guitars/pink_guitar.png");
         loadImage("yellowGuitar", "/images/guitars/yellow_guitar.png");
+        loadImage("Stress1", "/images/ZeroSanity/Stress1.jpeg");
+        loadImage("Stress2", "/images/ZeroSanity/Stress2.jpeg");
+        loadImage("Stress3", "/images/ZeroSanity/Stress3.jpeg");
+        loadImage("Lapar 1", "/images/ZeroFood/Hungry1.jpeg");
+        loadImage("Lapar 2", "/images/ZeroFood/Hungry2.jpeg");
+        loadImage("Lapar 3", "/images/ZeroFood/Hungry3.jpeg");
 
         // SFX
         loadSound("cashRegisterSound", "/sfx/cash_register.mp3");

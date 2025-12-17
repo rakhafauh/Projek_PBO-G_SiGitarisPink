@@ -1,0 +1,9 @@
+com\bocchipet\models\activities\IActivity.class
+com\bocchipet\models\activities\PartTimeJob.class
+com\bocchipet\models\PlayerDataDTO.class
+com\bocchipet\models\shop\ShopItem.class
+com\bocchipet\services\SaveLoadService.class
+com\bocchipet\models\activities\BandPractice.class
+com\bocchipet\models\events\SicknessEvent.class
+com\bocchipet\services\AssetManager.class
+com\bocchipet\models\events\GameEvent.class
