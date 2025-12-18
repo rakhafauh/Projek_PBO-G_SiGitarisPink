@@ -192,21 +192,69 @@
                                 <Font name="System Bold" size="24.0" />
                             </font>
                         </Label>
+
                         <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent;" VBox.vgrow="ALWAYS">
                             <content>
-                                <VBox alignment="CENTER" spacing="15.0">
-                                    <padding>
-                                        <Insets top="10.0" bottom="10.0" />
-                                    </padding>
+                                <javafx.scene.layout.FlowPane styleClass="shop-grid" alignment="CENTER">
                                     <children>
-                                        <Button mnemonicParsing="false" onAction="#onBuyOnigiri" prefWidth="250.0" styleClass="menu-button" text="Onigiri (¥50) - Food +20" />
-                                        <Button mnemonicParsing="false" onAction="#onBuyBento" prefWidth="250.0" styleClass="menu-button" text="Bento (¥150) - Food +50" />
-                                        <Button mnemonicParsing="false" onAction="#onBuyPinkGuitar" prefWidth="250.0" styleClass="menu-button" text="Pink Guitar (¥5000)" />
-                                        <Button mnemonicParsing="false" onAction="#onBuyYellowGuitar" prefWidth="250.0" styleClass="menu-button" text="Yellow Guitar (¥5000)" />
+                                    
+                                        <VBox styleClass="shop-card">
+                                            <children>
+                                                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                        <Image url="@../images/ui/icon_onigiri.png" />
+                                                    </image>
+                                                </ImageView>
+                                                <Label text="Onigiri" styleClass="item-name" />
+                                                <Label text="Food +20" styleClass="item-desc" />
+                                                <Button text="¥50" onAction="#onBuyOnigiri" styleClass="buy-button" prefWidth="100.0"/>
+                                            </children>
+                                        </VBox>
+
+                                        <VBox styleClass="shop-card">
+                                            <children>
+                                                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                        <Image url="@../images/ui/Bento_icon.png" /> 
+                                                    </image>
+                                                </ImageView>
+                                                <Label text="Bento" styleClass="item-name" />
+                                                <Label text="Food +50" styleClass="item-desc" />
+                                                <Button text="¥150" onAction="#onBuyBento" styleClass="buy-button" prefWidth="100.0"/>
+                                            </children>
+                                        </VBox>
+
+                                        <VBox styleClass="shop-card">
+                                            <children>
+                                                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                        <Image url="@../images/ui/Pink-Guitar.png" />
+                                                    </image>
+                                                </ImageView>
+                                                <Label text="Pink Guitar" styleClass="item-name" wrapText="true" textAlignment="CENTER"/>
+                                                <Label text="Sanity ++" styleClass="item-desc" />
+                                                <Button text="¥5000" onAction="#onBuyPinkGuitar" styleClass="buy-button" prefWidth="100.0"/>
+                                            </children>
+                                        </VBox>
+
+                                        <VBox styleClass="shop-card">
+                                            <children>
+                                                <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                        <Image url="@../images/ui/Yellow-Guitar.png" />
+                                                    </image>
+                                                </ImageView>
+                                                <Label text="Yellow Guitar" styleClass="item-name" wrapText="true" textAlignment="CENTER"/>
+                                                <Label text="Sanity +++" styleClass="item-desc" />
+                                                <Button text="¥5000" onAction="#onBuyYellowGuitar" styleClass="buy-button" prefWidth="100.0"/>
+                                            </children>
+                                        </VBox>
+
                                     </children>
-                                </VBox>
+                                </javafx.scene.layout.FlowPane>
                             </content>
                         </ScrollPane>
+                        
                         <Button mnemonicParsing="false" onAction="#onShopBackClick" prefWidth="150.0" style="-fx-background-color: #C62828; -fx-text-fill: white; -fx-font-weight: bold;" text="BACK" />
                     </children>
                 </VBox>
@@ -215,6 +263,5 @@
                 <Insets top="90.0" />
             </StackPane.margin>
         </AnchorPane>
-        
     </children>
 </StackPane>
