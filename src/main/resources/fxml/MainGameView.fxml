@@ -23,6 +23,7 @@
     </stylesheets>
     <children>
     
+        <!-- LAYER 1: GAMEPLAY UI -->
         <VBox alignment="TOP_CENTER" spacing="0.0">
             <children>
                 <AnchorPane prefHeight="90.0" minHeight="90.0" styleClass="header-section">
@@ -83,6 +84,7 @@
                     <children>
                         <ImageView fx:id="bocchiCharacter" fitHeight="400.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fx:id="animationOverlay" fitHeight="400.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" mouseTransparent="true" />
+                        <!-- GIF Game Over ada di sini sesuai kode teman Anda -->
                         <ImageView fx:id="SanityZeroGIF" fitHeight="400.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" visible="false" />
                         <ImageView fx:id="FoodZeroGIF" fitHeight="400.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" visible="false" /> 
                     </children>
@@ -126,6 +128,7 @@
             </children>
         </VBox>
 
+        <!-- LAYER 2: PAUSE MENU -->
         <VBox fx:id="settingsMenu" alignment="CENTER" pickOnBounds="false" spacing="20.0" styleClass="settings-menu" maxHeight="200.0" StackPane.alignment="CENTER">
             <children>
                 <VBox alignment="CENTER" spacing="15.0" styleClass="settings-panel" maxWidth="250.0">
@@ -139,6 +142,24 @@
             </children>
         </VBox>
 
+        <!-- [INSERTED] LAYER 3: GAME OVER MENU -->
+        <!-- Disisipkan di sini agar berada DI BAWAH Slot Menu -->
+        <!-- Jadi ketika klik Load, Slot Menu akan menutupi Game Over ini -->
+        <VBox fx:id="gameOverMenu" alignment="CENTER" visible="false" style="-fx-background-color: rgba(0,0,0,0.8);">
+            <children>
+                <VBox alignment="CENTER" spacing="20.0" styleClass="settings-panel" maxWidth="280.0" style="-fx-border-color: red;">
+                    <children>
+                        <Label text="GAME OVER" textFill="RED" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-font-family: 'System';" />
+                        <Label text="Bocchi has collapsed..." textFill="#555" style="-fx-font-size: 14px;" />
+                        
+                        <Button onAction="#onRestartClick" prefWidth="200.0" styleClass="menu-button" text="RESTART GAME" />
+                        <Button onAction="#onLoadGameOverClick" prefWidth="200.0" styleClass="menu-button" text="LOAD SAVE FILE" />
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+
+        <!-- LAYER 4: SLOT MENU -->
         <VBox fx:id="slotMenu" alignment="CENTER" visible="false" style="-fx-background-color: rgba(0,0,0,0.5);" spacing="20.0">
             <children>
                 <VBox alignment="CENTER" spacing="15.0" styleClass="settings-panel" maxWidth="300.0">
@@ -153,6 +174,7 @@
             </children>
         </VBox>
 
+        <!-- LAYER 5: INPUT NAME MENU -->
         <VBox fx:id="inputNameMenu" alignment="CENTER" visible="false" style="-fx-background-color: rgba(0,0,0,0.7);">
             <children>
                 <VBox alignment="CENTER" spacing="20.0" styleClass="settings-panel" maxWidth="280.0">
@@ -168,6 +190,7 @@
             </children>
         </VBox>
 
+        <!-- LAYER 6: CONFIRMATION MENU -->
         <VBox fx:id="confirmationMenu" alignment="CENTER" visible="false" style="-fx-background-color: rgba(0,0,0,0.7);">
             <children>
                 <VBox alignment="CENTER" spacing="20.0" styleClass="settings-panel" maxWidth="280.0" style="-fx-border-color: #D32F2F;">
@@ -183,6 +206,7 @@
             </children>
         </VBox>
 
+        <!-- LAYER 7: SHOP MENU -->
         <AnchorPane fx:id="shopMenu" visible="false" style="-fx-background-color: #F8BBD0;">
             <children>
                 <VBox alignment="CENTER" spacing="10.0" AnchorPane.topAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.bottomAnchor="10.0">
@@ -197,7 +221,7 @@
                             <content>
                                 <javafx.scene.layout.FlowPane styleClass="shop-grid" alignment="CENTER">
                                     <children>
-                                    
+                                        
                                         <VBox styleClass="shop-card">
                                             <children>
                                                 <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
