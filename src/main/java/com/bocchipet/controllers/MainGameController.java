@@ -277,11 +277,8 @@ public class MainGameController implements Initializable {
         
         TranslateTransition slideIn = new TranslateTransition(Duration.millis(500), animationOverlay);
         slideIn.setToX(0);
-        
         TranslateTransition slideOut = new TranslateTransition(Duration.millis(500), animationOverlay);
-        slideOut.setDelay(Duration.millis(1500)); 
-        slideOut.setToX(-400);
-        
+        slideOut.setDelay(Duration.millis(1500)); slideOut.setToX(-400);
         SequentialTransition sequence = new SequentialTransition(slideIn, slideOut);
         sequence.setOnFinished(e -> { 
             animationOverlay.setVisible(false); 
