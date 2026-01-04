@@ -1,7 +1,7 @@
 {
-  "sanity": 100,
-  "food": 100,
-  "money": 1000,
+  "sanity": 90,
+  "food": 55,
+  "money": 1850,
   "currentGuitarImage": "images/guitars/default_guitar.png",
-  "playerName": "Cibul"
+  "playerName": "Bocchi"
 }

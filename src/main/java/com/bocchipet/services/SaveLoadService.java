@@ -86,7 +86,7 @@ public class SaveLoadService {
         Path filePath = SAVE_PATH.resolve(slotName + ".json");
 
         if (!Files.exists(filePath)) {
-            return null; // Return null biar Controller tahu slot ini "Empty"
+            return null; // Return null biar Controller tau slot ini "Empty"
         }
 
         try (Reader reader = new FileReader(filePath.toFile())) {

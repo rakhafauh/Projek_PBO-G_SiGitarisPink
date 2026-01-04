@@ -1,11 +1,10 @@
 package com.bocchipet.services;
 
+import javafx.scene.image.Image;
+import javafx.scene.media.Media;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
-import javafx.scene.image.Image;
-import javafx.scene.media.Media;
 
 public class AssetManager {
 
@@ -20,34 +19,67 @@ public class AssetManager {
     public void loadAssets() {
         System.out.println("Memuat aset...");
         
-        // Kunci harus SAMA ama yang di PartTimeJob.java, dll.
-        loadImage("partTimeImage", "/images/activities/partTime.png");
-        loadImage("bandPracticeImage", "/images/activities/panggung1.png");
-        // gambar buat icon, karakter, gitar, dll.
-        loadImage("iconSanity", "/images/ui/icon_otak.png");
-        loadImage("iconFood", "/images/ui/icon_onigiri.png");
-        loadImage("iconMoney", "/images/ui/icon_money.png");
-        loadImage("iconSettings", "/images/ui/icon_gear.png");
+        // Gambar Bocchi
         loadImage("bocchiIdle1", "/images/character/idle_1.png");
         loadImage("bocchiIdle2", "/images/character/idle_2.png");
         loadImage("bocchiGuitar", "/images/character/guitar.png");
         loadImage("bocchiSleep", "/images/character/sleep.png");
+
+        // Gambar Activity
+        loadImage("partTimeImage", "/images/activities/partTime.png");
+        loadImage("panggung1", "/images/activities/panggung1.png");
+        loadImage("panggung2", "/images/activities/panggung2.png");
+        loadImage("panggung3", "/images/activities/panggung3.png");
+
+        // Gambar Game Over
+        loadImage("Stress1", "/images/character/stress_1.jpeg");
+        loadImage("Stress2", "/images/character/stress_2.jpeg");
+        loadImage("Stress3", "/images/character/stress_3.jpeg");
+        loadImage("Lapar 1", "/images/character/lapar_1.jpeg");
+        loadImage("Lapar 2", "/images/character/lapar_2.jpeg");
+        loadImage("Lapar 3", "/images/character/lapar_3.jpeg");
+
+        // Gambar EfeK (Notasi Musik)
+        loadImage("note1", "/images/ui/note_1.png");
+        loadImage("note2", "/images/ui/note_2.png");
+        loadImage("note3", "/images/ui/note_3.png");
+
+        // Gambar UI ama Ikon
+        loadImage("iconSanity", "/images/ui/icon_otak.png");
+        loadImage("iconFood", "/images/ui/icon_onigiri.png");
+        loadImage("iconMoney", "/images/ui/icon_money.png");
+        loadImage("iconSettings", "/images/ui/icon_gear.png");
+        loadImage("iconBand", "/images/ui/icon_band.png");
+        loadImage("iconPartTime", "/images/ui/icon_part_time.png");
+        loadImage("iconShop", "/images/ui/icon_shop.png");
+
+        // Gambar Shop Items
         loadImage("defaultGuitar", "/images/guitars/default_guitar.png");
         loadImage("pinkGuitar", "/images/guitars/pink_guitar.png");
         loadImage("yellowGuitar", "/images/guitars/yellow_guitar.png");
-        loadImage("Stress1", "/images/ZeroSanity/Stress1.jpeg");
-        loadImage("Stress2", "/images/ZeroSanity/Stress2.jpeg");
-        loadImage("Stress3", "/images/ZeroSanity/Stress3.jpeg");
-        loadImage("Lapar 1", "/images/ZeroFood/Hungry1.jpeg");
-        loadImage("Lapar 2", "/images/ZeroFood/Hungry2.jpeg");
-        loadImage("Lapar 3", "/images/ZeroFood/Hungry3.jpeg");
+        loadImage("iconOnigiri", "/images/ui/icon_onigiri.png");
+        loadImage("iconBento", "/images/ui/Bento_icon.png");
+        loadImage("iconEnergy", "/images/ui/energy_drink.png"); 
+        loadImage("iconPill", "/images/ui/pill.png");           
 
-        // SFX
+
+        // Suara Efek
         loadSound("cashRegisterSound", "/sfx/cash_register.mp3");
-        loadSound("guitarRiffSound", "/sfx/guitar_riff.mp3");
         loadSound("shopBellSound", "/sfx/bell.mp3");
         loadSound("gearSound", "/sfx/gear.mp3");
-        loadSound("guitarLoopSound", "/sfx/guitar_loop.mp3"); // Buat animasi karakter
+        loadSound("guitarLoopSound", "/sfx/guitar_loop.mp3");
+        loadSound("gameOverStress", "/sfx/gameover_stress.mp3");
+        loadSound("gameOverHunger", "/sfx/gameover_hunger.mp3");
+
+        
+        // Background Music Utama
+        loadSound("bgm", "/sfx/bgm.mp3");
+
+        // Musik Band
+        loadSound("music1", "/sfx/music1.mp3");
+        loadSound("music2", "/sfx/music2.mp3");
+        loadSound("music3", "/sfx/music3.mp3");
+        loadSound("guitarRiffSound", "/sfx/guitar_riff.mp3");
 
         System.out.println("Aset berhasil dimuat.");
     }
@@ -55,37 +87,21 @@ public class AssetManager {
     private void loadImage(String key, String path) {
         URL resourceUrl = getClass().getResource(path);
         if (resourceUrl == null) {
-            System.err.println("Gagal ngambil gambar! Aset gak ditemuin di: " + path);
+            System.err.println("WARNING: Gagal load gambar [" + key + "] di path: " + path);
         } else {
             images.put(key, new Image(resourceUrl.toExternalForm()));
         }
     }
 
-
     private void loadSound(String key, String path) {
         URL resourceUrl = getClass().getResource(path);
         if (resourceUrl == null) {
-            System.err.println("Gagal ngambil suara! Aset gak ditemuin di: " + path);
+            System.err.println("WARNING: Gagal load suara [" + key + "] di path: " + path);
         } else {
             sounds.put(key, new Media(resourceUrl.toExternalForm()));
         }
     }
 
-    // Getters Publik
-
-    public Image getImage(String key) {
-        Image img = images.get(key);
-        if (img == null) {
-            System.err.println("Gagal ngambil gambar. Kunci gak ditemuin: " + key);
-        }
-        return img;
-    }
-
-    public Media getSound(String key) {
-        Media sound = sounds.get(key);
-        if (sound == null) {
-            System.err.println("Gagal ngambil suara. Kunci gak ditemuin: " + key);
-        }
-        return sound;
-    }
+    public Image getImage(String key) { return images.get(key); }
+    public Media getSound(String key) { return sounds.get(key); }
 }

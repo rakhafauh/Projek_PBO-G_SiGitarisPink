@@ -4,21 +4,25 @@ import com.bocchipet.models.Player;
 
 public class BandPractice implements IActivity {
 
+    private int variant;
+
+    public BandPractice(int variant) {
+        this.variant = variant;
+    }
+
     @Override
     public void perform(Player player) {
-        player.addSanity(15);
-        player.addFood(-5);
-        
-        System.out.println("Aksi: Latihan Band. Sanity bertambah!");
+        player.addSanity(40); 
+        player.addFood(-30);   
     }
 
     @Override
     public String getAnimationImageKey() {
-        return "bandPracticeImage";
+        return "panggung" + variant;
     }
 
     @Override
     public String getSoundEffectKey() {
-        return "guitarRiffSound";
+        return "music" + variant;
     }
 }

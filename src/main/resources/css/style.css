@@ -3,7 +3,7 @@
 }
 
 .header-section {
-    -fx-background-color: #F48FB1; /* Pink Cerah */
+    -fx-background-color: #F48FB1;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 2);
 }
 
@@ -116,15 +116,13 @@
     -fx-background-color: #F48FB1;
 }
 
-/* Container untuk menata kartu agar berjejer rapi (Grid) */
 .shop-grid {
     -fx-padding: 20;
-    -fx-hgap: 20; /* Jarak antar kartu (horizontal) */
-    -fx-vgap: 20; /* Jarak antar kartu (vertikal) */
+    -fx-hgap: 20; 
+    -fx-vgap: 20; 
     -fx-alignment: top-center;
 }
 
-/* Tampilan Kartu Item */
 .shop-card {
     -fx-background-color: white;
     -fx-background-radius: 15;
@@ -136,20 +134,17 @@
     -fx-spacing: 5;
 }
 
-/* Judul Item (Misal: Onigiri) */
 .item-name {
     -fx-font-weight: bold;
     -fx-font-size: 14px;
     -fx-text-fill: #880E4F;
 }
 
-/* Deskripsi Item (Misal: Food +20) */
 .item-desc {
     -fx-font-size: 11px;
     -fx-text-fill: #555;
 }
 
-/* Tombol Beli di dalam kartu */
 .buy-button {
     -fx-background-color: #F48FB1;
     -fx-text-fill: white;
@@ -159,4 +154,22 @@
 }
 .buy-button:hover {
     -fx-background-color: #F06292;
+}
+
+.sanity-bar > .bar {
+    -fx-background-color: #3498db; 
+    -fx-background-insets: 0;
+}
+
+.food-bar > .bar {
+    -fx-background-color: #e67e22; 
+    -fx-background-insets: 0;
+}
+
+.bar-warning > .bar {
+    -fx-background-color: #FF9800 !important;
+}
+
+.bar-critical > .bar {
+    -fx-background-color: #D32F2F !important;
 }
