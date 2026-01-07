@@ -1,7 +1,7 @@
 {
-  "sanity": 100,
-  "food": 100,
-  "money": 1000,
+  "sanity": 0,
+  "food": 95,
+  "money": 1100,
   "currentGuitarImage": "images/guitars/default_guitar.png",
-  "playerName": "Cibul"
+  "playerName": "naaq"
 }

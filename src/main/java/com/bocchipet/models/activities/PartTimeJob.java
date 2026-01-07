@@ -7,7 +7,7 @@ public class PartTimeJob implements IActivity {
 
     @Override
     public void perform(Player player) {
-        player.addSanity(-10);
+        player.addSanity(-100);
         player.addFood(-5);
         player.addMoney(100);
         
