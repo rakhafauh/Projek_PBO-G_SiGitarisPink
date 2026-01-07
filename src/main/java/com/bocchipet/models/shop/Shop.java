@@ -27,10 +27,10 @@ public class Shop {
         this.availableItems.add(new ShopItem("Sanity Pill", 300, 0, null));
 
         // Index 4
-        this.availableItems.add(new ShopItem("Pink Guitar", 18000, 0, "images/guitars/pink_guitar.png"));
+        this.availableItems.add(new ShopItem("Pink Guitar", 20000, 0, "images/guitars/pink_guitar.png"));
         
         // Index 5
-        this.availableItems.add(new ShopItem("Yellow Guitar", 20000, 0, "images/guitars/yellow_guitar.png"));
+        this.availableItems.add(new ShopItem("Yellow Guitar", 18000, 0, "images/guitars/yellow_guitar.png"));
     }
 
     public boolean purchaseItem(Player player, ShopItem item) {

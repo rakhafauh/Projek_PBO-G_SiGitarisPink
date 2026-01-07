@@ -32,12 +32,11 @@ public class AssetManager {
         loadImage("panggung3", "/images/activities/panggung3.png");
 
         // Gambar Game Over
-        loadImage("Stress1", "/images/character/stress_1.jpeg");
-        loadImage("Stress2", "/images/character/stress_2.jpeg");
-        loadImage("Stress3", "/images/character/stress_3.jpeg");
-        loadImage("Lapar 1", "/images/character/lapar_1.jpeg");
-        loadImage("Lapar 2", "/images/character/lapar_2.jpeg");
-        loadImage("Lapar 3", "/images/character/lapar_3.jpeg");
+        loadImage("stressGIF", "/images/character/stress.gif");
+
+        loadImage("Lapar 1", "/images/character/lapar_1.png");
+        loadImage("Lapar 2", "/images/character/lapar_2.png");
+        loadImage("Lapar 3", "/images/character/lapar_3.png");
 
         // Gambar EfeK (Notasi Musik)
         loadImage("note1", "/images/ui/note_1.png");
@@ -79,7 +78,7 @@ public class AssetManager {
         loadSound("music1", "/sfx/music1.mp3");
         loadSound("music2", "/sfx/music2.mp3");
         loadSound("music3", "/sfx/music3.mp3");
-        loadSound("guitarRiffSound", "/sfx/guitar_riff.mp3");
+        loadSound("guitarRiffSound", "/sfx/guitar_riff.mp3"); //Pas beli gitar
 
         System.out.println("Aset berhasil dimuat.");
     }

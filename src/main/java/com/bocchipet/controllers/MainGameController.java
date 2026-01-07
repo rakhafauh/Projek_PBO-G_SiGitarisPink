@@ -111,7 +111,6 @@ public class MainGameController implements Initializable {
     private MediaPlayer bgmPlayer; 
 
     private Timeline characterAnimation;
-    private Timeline SanityZero;
     private Timeline FoodZero;
     private Timeline discoLightTimeline;
     private Timeline notesAnimation1;
@@ -149,6 +148,7 @@ public class MainGameController implements Initializable {
         if (guitarLoopMedia != null) {
             guitarLoopMusic = new MediaPlayer(guitarLoopMedia);
             guitarLoopMusic.setCycleCount(MediaPlayer.INDEFINITE);
+            guitarLoopMusic.setVolume(0.2);
         }
 
         Media bgmMedia = assetManager.getSound("bgm");
@@ -310,16 +310,24 @@ public class MainGameController implements Initializable {
                 scaleDown.setToY(0.85);
                 scaleDown.play();
 
+                // Bagian Deteksi Warna Gitar
+                Color themeColor = Color.HOTPINK; 
+                String currentGuitar = player.getCurrentGuitarImage();
+                if (currentGuitar != null) {
+                    if (currentGuitar.contains("pink")) themeColor = null;
+                    else if (currentGuitar.contains("yellow")) themeColor = Color.GOLD;
+                }
+
                 DropShadow outlineGlow = new DropShadow();
                 outlineGlow.setRadius(50);
                 outlineGlow.setSpread(0.5);
-                outlineGlow.setColor(Color.RED); 
+                outlineGlow.setColor(themeColor != null ? themeColor : Color.RED); 
                 
                 // Langsung pasang outline (tanpa darken)
                 animationOverlay.setEffect(outlineGlow);
 
-                startDiscoLights(outlineGlow); 
-                startNoteAnimations(); 
+                startDiscoLights(outlineGlow, themeColor); 
+                startNoteAnimations(themeColor); 
 
                 sfxPlayer.play();
                 
@@ -368,8 +376,7 @@ public class MainGameController implements Initializable {
     }
 
     // Bagian efek visual (kacau bat lampu disko & notasi musik)
-
-    private void startDiscoLights(DropShadow outlineEffect) {
+    private void startDiscoLights(DropShadow outlineEffect, Color themeColor) {
         if (discoOverlay == null) return;
         discoOverlay.getChildren().clear();
         discoOverlay.setVisible(true);
@@ -392,26 +399,44 @@ public class MainGameController implements Initializable {
 
         double opacity = 0.8;
         
-        discoLightTimeline = new Timeline(
-            new KeyFrame(Duration.seconds(0.0), 
-                new KeyValue(hollowOverlay.fillProperty(), Color.rgb(100, 0, 0, opacity)),
-                new KeyValue(outlineEffect.colorProperty(), Color.RED)), 
-            new KeyFrame(Duration.seconds(0.3), 
-                new KeyValue(hollowOverlay.fillProperty(), Color.rgb(0, 0, 100, opacity)),
-                new KeyValue(outlineEffect.colorProperty(), Color.BLUE)),
-            new KeyFrame(Duration.seconds(0.6), 
-                new KeyValue(hollowOverlay.fillProperty(), Color.rgb(0, 100, 0, opacity)),
-                new KeyValue(outlineEffect.colorProperty(), Color.LIME)),
-            new KeyFrame(Duration.seconds(0.9), 
-                new KeyValue(hollowOverlay.fillProperty(), Color.rgb(100, 100, 0, opacity)),
-                new KeyValue(outlineEffect.colorProperty(), Color.YELLOW)),
-            new KeyFrame(Duration.seconds(1.2), 
-                new KeyValue(hollowOverlay.fillProperty(), Color.rgb(80, 0, 80, opacity)),
-                new KeyValue(outlineEffect.colorProperty(), Color.MAGENTA))
-        );
+        if (themeColor != null) {
+            // Mode satu warna
+            discoLightTimeline = new Timeline(
+                new KeyFrame(Duration.seconds(0.0), 
+                    new KeyValue(hollowOverlay.fillProperty(), deriveColor(themeColor, opacity)),
+                    new KeyValue(outlineEffect.colorProperty(), themeColor)),
+                new KeyFrame(Duration.seconds(0.5), 
+                    new KeyValue(hollowOverlay.fillProperty(), deriveColor(themeColor, 0.4)), 
+                    new KeyValue(outlineEffect.colorProperty(), Color.WHITE))
+            );
+        } else {
+            // Mode rainbow
+            discoLightTimeline = new Timeline(
+                new KeyFrame(Duration.seconds(0.0), 
+                    new KeyValue(hollowOverlay.fillProperty(), Color.rgb(100, 0, 0, opacity)),
+                    new KeyValue(outlineEffect.colorProperty(), Color.RED)), 
+                new KeyFrame(Duration.seconds(0.3), 
+                    new KeyValue(hollowOverlay.fillProperty(), Color.rgb(0, 0, 100, opacity)),
+                    new KeyValue(outlineEffect.colorProperty(), Color.BLUE)),
+                new KeyFrame(Duration.seconds(0.6), 
+                    new KeyValue(hollowOverlay.fillProperty(), Color.rgb(0, 100, 0, opacity)),
+                    new KeyValue(outlineEffect.colorProperty(), Color.LIME)),
+                new KeyFrame(Duration.seconds(0.9), 
+                    new KeyValue(hollowOverlay.fillProperty(), Color.rgb(100, 100, 0, opacity)),
+                    new KeyValue(outlineEffect.colorProperty(), Color.YELLOW)),
+                new KeyFrame(Duration.seconds(1.2), 
+                    new KeyValue(hollowOverlay.fillProperty(), Color.rgb(80, 0, 80, opacity)),
+                    new KeyValue(outlineEffect.colorProperty(), Color.MAGENTA))
+            );
+        }
+
         discoLightTimeline.setAutoReverse(true);
         discoLightTimeline.setCycleCount(Timeline.INDEFINITE);
         discoLightTimeline.play();
+    }
+    
+    private Color deriveColor(Color c, double opacity) {
+        return new Color(c.getRed(), c.getGreen(), c.getBlue(), opacity);
     }
 
     private void stopDiscoLights() {
@@ -422,17 +447,17 @@ public class MainGameController implements Initializable {
         }
     }
 
-    private void startNoteAnimations() {
-        notesAnimation1 = createSingleNoteAnimation(noteView1, -120, 0); 
-        notesAnimation2 = createSingleNoteAnimation(noteView2, 0, 1);    
-        notesAnimation3 = createSingleNoteAnimation(noteView3, 120, 3);  
+    private void startNoteAnimations(Color themeColor) {
+        notesAnimation1 = createSingleNoteAnimation(noteView1, -120, 0, themeColor); 
+        notesAnimation2 = createSingleNoteAnimation(noteView2, 0, 1, themeColor);    
+        notesAnimation3 = createSingleNoteAnimation(noteView3, 120, 3, themeColor);  
         
         notesAnimation1.play();
         notesAnimation2.play();
         notesAnimation3.play();
     }
 
-    private Timeline createSingleNoteAnimation(ImageView noteView, double baseX, int startColorIndex) {
+    private Timeline createSingleNoteAnimation(ImageView noteView, double baseX, int startColorIndex, Color themeColor) {
         final int[] colorIdx = { startColorIndex };
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.8), e -> {
@@ -440,8 +465,13 @@ public class MainGameController implements Initializable {
             Image img = assetManager.getImage(noteKey);
             if (img != null) noteView.setImage(img);
             
-            Color currentColor = NOTE_COLORS[colorIdx[0] % NOTE_COLORS.length];
-            colorIdx[0]++; 
+            Color currentColor;
+            if (themeColor != null) {
+                currentColor = themeColor; 
+            } else {
+                currentColor = NOTE_COLORS[colorIdx[0] % NOTE_COLORS.length]; 
+                colorIdx[0]++; 
+            }
 
             ColorAdjust makeWhite = new ColorAdjust();
             makeWhite.setBrightness(1.0);
@@ -539,20 +569,12 @@ public class MainGameController implements Initializable {
         stopAllGameActivities(); 
 
         SanityZeroGIF.setVisible(true);
-        if (SanityZero == null) initializeSanityZero();
-        SanityZero.playFromStart(); 
-        
-        playDelayedSound("gameOverStress", 1.0);
+        SanityZeroGIF.setImage(assetManager.getImage("stressGIF"));
+
+        playSound(assetManager.getSound("gameOverStress"));
         startGameOverDelay();
     }
-    private void initializeSanityZero(){
-        SanityZero = new Timeline(
-            new KeyFrame(Duration.seconds(0), e -> SanityZeroGIF.setImage(assetManager.getImage("Stress1"))),
-            new KeyFrame(Duration.seconds(0.5), e -> SanityZeroGIF.setImage(assetManager.getImage("Stress2"))),
-            new KeyFrame(Duration.seconds(1.0), e -> SanityZeroGIF.setImage(assetManager.getImage("Stress3"))),
-            new KeyFrame(Duration.seconds(1.5))
-        ); SanityZero.setCycleCount(Timeline.INDEFINITE);
-    }
+
     public void triggerFoodZero() {
         if (isGameOver) return;
         isGameOver = true;
@@ -560,8 +582,8 @@ public class MainGameController implements Initializable {
         FoodZeroGIF.setVisible(true);
         if (FoodZero == null) initializeFoodZero();
         FoodZero.playFromStart();
-        
-        playDelayedSound("gameOverHunger", 1.0);
+
+        playSound(assetManager.getSound("gameOverHunger"));
         startGameOverDelay();
     }
     private void initializeFoodZero(){
@@ -582,9 +604,9 @@ public class MainGameController implements Initializable {
         player.sanityProperty().set(100);
         player.foodProperty().set(100);
         player.moneyProperty().set(1000);
-        player.setName("Bocchi");
-        if (SanityZero != null) SanityZero.stop();
+        player.setName("Bocchi");        
         if (FoodZero != null) FoodZero.stop();
+        
         stopAllGameActivities();
         resetUIState();
         if (bgmPlayer != null) { bgmPlayer.setVolume(0.5); bgmPlayer.play(); } 
@@ -632,19 +654,20 @@ public class MainGameController implements Initializable {
             showFloatingText(sanityContainer, diffSanity); showFloatingText(foodContainer, diffFood);
         }
     }
-
+    
     private void initializeCharacterAnimation() {
         ColorAdjust lightsOff = new ColorAdjust(); lightsOff.setBrightness(-0.6); 
         characterAnimation = new Timeline(
             new KeyFrame(Duration.seconds(0), e -> { bocchiCharacter.setImage(assetManager.getImage("bocchiIdle1")); bocchiCharacter.setEffect(null); if (guitarLoopMusic != null) guitarLoopMusic.stop(); if (bgmPlayer != null) bgmPlayer.setVolume(0.5); }),
             new KeyFrame(Duration.seconds(2.0), e -> { bocchiCharacter.setImage(assetManager.getImage("bocchiIdle2")); bocchiCharacter.setEffect(null); }),
             new KeyFrame(Duration.seconds(2.2), e -> { bocchiCharacter.setImage(assetManager.getImage("bocchiIdle1")); bocchiCharacter.setEffect(null); }),
-            new KeyFrame(Duration.seconds(5), e -> { bocchiCharacter.setImage(assetManager.getImage("bocchiGuitar")); bocchiCharacter.setEffect(null); if (guitarLoopMusic != null) guitarLoopMusic.play(); if (bgmPlayer != null) bgmPlayer.setVolume(0.1); }),
+            new KeyFrame(Duration.seconds(5), e -> { bocchiCharacter.setImage(assetManager.getImage("bocchiGuitar")); bocchiCharacter.setEffect(lightsOff); if (guitarLoopMusic != null) guitarLoopMusic.play(); if (bgmPlayer != null) bgmPlayer.setVolume(0.1); }),
             new KeyFrame(Duration.seconds(10), e -> { bocchiCharacter.setImage(assetManager.getImage("bocchiSleep")); bocchiCharacter.setEffect(lightsOff); if (guitarLoopMusic != null) guitarLoopMusic.stop(); if (bgmPlayer != null) bgmPlayer.setVolume(0.5); }),
             new KeyFrame(Duration.seconds(15)) 
         );
         characterAnimation.setCycleCount(Timeline.INDEFINITE);
     }
+    
     private class InternalUIManager {
         private ProgressBar sanityBar; private ProgressBar foodBar; private Label moneyLabel; private ImageView bocchiCharView;
         private Timeline moneyRollAnimation; private Timeline sanityBlink; private Timeline foodBlink;
