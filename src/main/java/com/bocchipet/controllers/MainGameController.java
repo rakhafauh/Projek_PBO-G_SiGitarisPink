@@ -148,7 +148,7 @@ public class MainGameController implements Initializable {
         if (guitarLoopMedia != null) {
             guitarLoopMusic = new MediaPlayer(guitarLoopMedia);
             guitarLoopMusic.setCycleCount(MediaPlayer.INDEFINITE);
-            guitarLoopMusic.setVolume(0.2);
+            guitarLoopMusic.setVolume(0.4);
         }
 
         Media bgmMedia = assetManager.getSound("bgm");

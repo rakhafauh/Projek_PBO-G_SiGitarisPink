@@ -53,9 +53,6 @@ public class AssetManager {
         loadImage("iconShop", "/images/ui/icon_shop.png");
 
         // Gambar Shop Items
-        loadImage("defaultGuitar", "/images/guitars/default_guitar.png");
-        loadImage("pinkGuitar", "/images/guitars/pink_guitar.png");
-        loadImage("yellowGuitar", "/images/guitars/yellow_guitar.png");
         loadImage("iconOnigiri", "/images/ui/icon_onigiri.png");
         loadImage("iconBento", "/images/ui/Bento_icon.png");
         loadImage("iconEnergy", "/images/ui/energy_drink.png"); 
