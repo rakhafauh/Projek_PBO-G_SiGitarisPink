@@ -6,6 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import javafx.event.EventHandler; 
+
 
 import java.io.IOException;
 import java.net.URL;
@@ -29,9 +32,13 @@ public class MainApp extends Application {
             primaryStage.setTitle("Bocchi Pet Game");
             primaryStage.setScene(scene);
             
-            primaryStage.setOnCloseRequest(e -> {
-                Platform.exit();
-                System.exit(0);
+            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    // buat mastiin semuanya mati
+                    Platform.exit();
+                    System.exit(0);
+                }
             });
             
             primaryStage.show();
