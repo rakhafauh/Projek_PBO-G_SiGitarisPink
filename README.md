@@ -1,18 +1,19 @@
-## Getting Started
+# Si Gitaris Pink: Penggabungan karakter Bocchi dari Bocchi The Rock! dengan game Pou.
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+SiGitarisPink adalah game simulasi peliharaan virtual dengan referensi utama yaitu dari game Pou dan panduan karakter Bocchi (Hitori Gotoh). Proyek ini dikembangkan sebagai Tugas Besar untuk Praktikum Pemrograman Berorientasi Objek (PBO) Kelas G.
 
-## Folder Structure
+## Demonstrasi
+![Gameplay Demo](<img width="200" height="344" alt="compressed-1777304370144" src="https://github.com/user-attachments/assets/498d47c7-0775-4a8d-87a7-1f6abb8c3614" />)
 
-The workspace contains two folders by default, where:
+## Fitur Utama
+- **Status Management:** Pantau bar makanan dan *sanity* Bocchi biar selalu stabil.
+- **Item Shop:** Beli *gear* gitar menggunakan mata uang dalam game.
+- **Save/Load System:** Data permainan tersimpan secara otomatis menggunakan format JSON (Gson).
+- **Tampilan Part-Time & Band:** Munculnya gambar ketika melakukan Part-time dan melakukan Band.
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+##  Panduan untuk mengunduh
+Jika ingin mencoba gamenya secara langsung bisa unduh melalui:
+1. Buka tab [Releases](https://github.com/rakhafauh/Projek_PBO-G_SiGitarisPink/releases).
+2. Unduh file `.zip`.
+3. Ekstrak file tersebut, lalu klik dua kali pada `SiGitarisPink.exe`.
+*Catatan: Tidak butuh instalasi Java karena sudah termasuk di dalam folder.*
