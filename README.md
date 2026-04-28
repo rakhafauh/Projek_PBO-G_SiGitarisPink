@@ -3,7 +3,7 @@
 SiGitarisPink adalah game simulasi peliharaan virtual dengan referensi utama yaitu dari game Pou dan panduan karakter Bocchi (Hitori Gotoh). Proyek ini dikembangkan sebagai Tugas Besar untuk Praktikum Pemrograman Berorientasi Objek (PBO) Kelas G.
 
 ## Demonstrasi
-![Gameplay Demo](<img width="200" height="344" alt="compressed-1777304370144" src="https://github.com/user-attachments/assets/498d47c7-0775-4a8d-87a7-1f6abb8c3614" />)
+<img src="https://github.com/user-attachments/assets/498d47c7-0775-4a8d-87a7-1f6abb8c3614" width="200" height="344" alt="Gameplay Demo" />
 
 ## Fitur Utama
 - **Status Management:** Pantau bar makanan dan *sanity* Bocchi biar selalu stabil.
